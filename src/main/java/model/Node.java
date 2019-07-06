@@ -1,6 +1,6 @@
 package model;
 
-public class Node{
+public class Node {
     private int hash;
     private int key;
     private long value;
@@ -26,10 +26,8 @@ public class Node{
 
     @Override
     public String toString() {
-        return "Node{" +
-                "hash=" + hash +
-                ", key=" + key +
-                ", value=" + value +
-                "}\n";
+        return "hash=" + hash +
+                "key=" + key +
+                "value=" + value + "\n";
     }
 }

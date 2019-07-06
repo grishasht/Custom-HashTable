@@ -13,6 +13,10 @@ public class HashMap {
 
         for (int i = 1; nodes[index] != null; i++) {
 
+            if (nodes[index].getHash() == Objects.hashCode(key)) {
+                break;
+            }
+
             index = changeIndex(key, i);
 
             if (i == (nodes.length - 1)) expandNodes();
