@@ -10,24 +10,15 @@ public class HashMap {
     public void put(int key, long value) {
         int keyHash = Objects.hashCode(key);
         int index = keyHash & (nodes.length - 1);
-        boolean isExist = false;
 
         for (int i = 1; nodes[index] != null; i++) {
-
-            if (nodes[index].getHash() == Objects.hashCode(key)) {
-                isExist = true;
-                break;
-            }
 
             index = changeIndex(key, i);
 
             if (i == (nodes.length - 1)) expandNodes();
         }
 
-
-        //if (!isExist) {
         nodes[index] = new Node(keyHash, key, value);
-        //}
     }
 
     public long get(int key) {
