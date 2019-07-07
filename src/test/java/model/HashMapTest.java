@@ -49,7 +49,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void shouldReturnCorrectSize(){
+    public void shouldReturnCorrectSize() {
         int expected = 11;
         hashMap.put(121, 11);
         int result = hashMap.size();
@@ -58,7 +58,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void shouldChangeSize(){
+    public void shouldChangeSize() {
         int old = 10;
         hashMap.put(121, 11);
         int result = hashMap.size();
@@ -67,7 +67,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void whenPutCallRealMethodCalled(){
+    public void whenPutCallRealMethodCalled() {
         HashMap map = mock(HashMap.class);
         doCallRealMethod().when(map).put(isA(int.class), isA(long.class));
         map.put(1, 10);
@@ -76,7 +76,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void whenPutCalledAnswered(){
+    public void whenPutCalledAnswered() {
         HashMap map = mock(HashMap.class);
 
         doAnswer(invocation -> {

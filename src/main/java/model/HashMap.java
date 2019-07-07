@@ -1,6 +1,7 @@
 package model;
 
 import model.exception.FullHashMapException;
+
 import java.util.Objects;
 
 /**
@@ -27,34 +28,34 @@ public class HashMap implements Map {
     @Override
     public void put(int key, long value) {
         if (nodes != null)
-        try {
-            if (size == nodes.length)
-                throw new FullHashMapException("All hash map buckets are full");
+            try {
+                if (size == nodes.length)
+                    throw new FullHashMapException("All hash map buckets are full");
 
 
-            int keyHash = Objects.hashCode(key);
-            int index = keyHash & (nodes.length - 1);
-            boolean isFull = false;
+                int keyHash = Objects.hashCode(key);
+                int index = keyHash & (nodes.length - 1);
+                boolean isFull = false;
 
-            int i = 1;
-            while (nodes[index] != null) {
+                int i = 1;
+                while (nodes[index] != null) {
 
-                if (nodes[index].getHash() == Objects.hashCode(key)) {
-                    isFull = true;
-                    break;
+                    if (nodes[index].getHash() == Objects.hashCode(key)) {
+                        isFull = true;
+                        break;
+                    }
+
+                    index = changeIndex(keyHash, i);
+
+                    i++;
                 }
 
-                index = changeIndex(keyHash, i);
-
-                i++;
+                nodes[index] = new Node(keyHash, key, value);
+                if (!isFull)
+                    size++;
+            } catch (FullHashMapException e) {
+                e.printStackTrace();
             }
-
-            nodes[index] = new Node(keyHash, key, value);
-            if (!isFull)
-                size++;
-        } catch (FullHashMapException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -62,7 +63,7 @@ public class HashMap implements Map {
      * Finds index of the key in buckets in the same way as it was
      * calculated while putting.
      * Stops recursion if all items were taken over.
-     *
+     * <p>
      * Overloaded method for user executing.
      */
     @Override
