@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class HashMapTest {
+public class HashMapTest{
     private HashMap hashMap = new HashMap(16);
 
     @Test
@@ -15,5 +15,10 @@ public class HashMapTest {
 
         Long result = hashMap.get(3);
         assertEquals(null, result);
+    }
+
+    @Test
+    public void getShouldReturnAllInput(){
+        
     }
 }
