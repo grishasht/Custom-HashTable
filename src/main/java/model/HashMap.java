@@ -1,7 +1,6 @@
 package model;
 
 import model.exception.FullHashMapException;
-
 import java.util.Objects;
 
 /**
@@ -27,6 +26,7 @@ public class HashMap implements Map {
      */
     @Override
     public void put(int key, long value) {
+        if (nodes != null)
         try {
             if (size == nodes.length)
                 throw new FullHashMapException("All hash map buckets are full");
@@ -34,11 +34,15 @@ public class HashMap implements Map {
 
             int keyHash = Objects.hashCode(key);
             int index = keyHash & (nodes.length - 1);
+            boolean isFull = false;
 
             int i = 1;
             while (nodes[index] != null) {
 
-                if (nodes[index].getHash() == Objects.hashCode(key)) break;
+                if (nodes[index].getHash() == Objects.hashCode(key)) {
+                    isFull = true;
+                    break;
+                }
 
                 index = changeIndex(keyHash, i);
 
@@ -46,18 +50,11 @@ public class HashMap implements Map {
             }
 
             nodes[index] = new Node(keyHash, key, value);
-            size++;
+            if (!isFull)
+                size++;
         } catch (FullHashMapException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Overloaded method for user executing.
-     */
-    @Override
-    public Long get(int key) {
-        return this.get(key, 0);
     }
 
     /**
@@ -65,7 +62,14 @@ public class HashMap implements Map {
      * Finds index of the key in buckets in the same way as it was
      * calculated while putting.
      * Stops recursion if all items were taken over.
+     *
+     * Overloaded method for user executing.
      */
+    @Override
+    public Long get(int key) {
+        return this.get(key, 0);
+    }
+
     private Long get(int key, int i) {
         int keyHash = Objects.hashCode(key);
         int index = changeIndex(keyHash, i);
