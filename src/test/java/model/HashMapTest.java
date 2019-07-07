@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class HashMapTest {
     private HashMap hashMap = new HashMap(16);
@@ -64,4 +65,29 @@ public class HashMapTest {
 
         assertNotEquals(old, result);
     }
+
+    @Test
+    public void whenPutCallRealMethodCalled(){
+        HashMap map = mock(HashMap.class);
+        doCallRealMethod().when(map).put(isA(int.class), isA(long.class));
+        map.put(1, 10);
+
+        verify(map, times(1)).put(1, 10);
+    }
+
+    @Test
+    public void whenPutCalledAnswered(){
+        HashMap map = mock(HashMap.class);
+
+        doAnswer(invocation -> {
+            int arg0 = invocation.getArgument(0);
+            long arg1 = invocation.getArgument(1);
+
+            assertEquals(3, arg0);
+            assertEquals(5L, arg1);
+            return null;
+        }).when(map).put(any(int.class), any(long.class));
+        map.put(3, 5L);
+    }
+
 }
